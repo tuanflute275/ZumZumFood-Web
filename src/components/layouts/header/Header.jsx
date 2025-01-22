@@ -46,7 +46,7 @@ const Header = () => {
           <a
             class="nav-link dropdown-toggle mr-0 waves-effect waves-light"
             data-toggle="dropdown"
-            href="#"
+            href="javascript:void(0);"
             role="button"
             aria-haspopup="false"
             aria-expanded="false"
@@ -122,7 +122,7 @@ const Header = () => {
             <div class="dropdown-item noti-title">
               <h5 class="m-0">
                 <span class="float-right">
-                  <a href="" class="text-dark">
+                  <a href="javascript:void(0);" class="text-dark">
                     <small>Clear All</small>
                   </a>
                 </span>
@@ -218,7 +218,7 @@ const Header = () => {
           <a
             class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
             data-toggle="dropdown"
-            href="#"
+            href="javascript:void(0);"
             role="button"
             aria-haspopup="false"
             aria-expanded="false"
@@ -227,7 +227,7 @@ const Header = () => {
              src={
               userData?.user?.avatar
                 ? userData?.user?.avatar
-                : "https://cellphones.com.vn/sforum/wp-content/uploads/2024/01/avartar-anime-52.jpg"
+                : ""
             }
              alt="user-image"
               class="rounded-circle"
@@ -275,7 +275,7 @@ const Header = () => {
       </ul>
 
       <div class="logo-box">
-        <a href="index.html" class="logo text-center">
+        <Link to={"/dashboard"} class="logo text-center">
           <span class="logo-lg">
             <img src="assets\images\logo-light.png" alt="" height="20" />
             {/* <!-- <span class="logo-lg-text-light">Xeria</span> --> */}
@@ -284,7 +284,7 @@ const Header = () => {
             {/* <!-- <span class="logo-sm-text-dark">X</span> --> */}
             <img src="assets\images\logo-sm.png" alt="" height="24" />
           </span>
-        </a>
+        </Link>
       </div>
 
       <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
@@ -298,7 +298,7 @@ const Header = () => {
           <a
             class="nav-link dropdown-toggle waves-effect waves-light"
             data-toggle="dropdown"
-            href="#"
+            href="javascript:void(0);"
             role="button"
             aria-haspopup="false"
             aria-expanded="false"
@@ -340,7 +340,7 @@ const Header = () => {
           <a
             class="nav-link dropdown-toggle waves-effect waves-light"
             data-toggle="dropdown"
-            href="#"
+            href="javascript:void(0);"
             role="button"
             aria-haspopup="false"
             aria-expanded="false"

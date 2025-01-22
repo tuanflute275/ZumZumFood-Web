@@ -35,12 +35,13 @@ const Parameter = () => {
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Para Scope</th>
-                      <th>Para Name</th>
-                      <th>Para Type</th>
+                      <th>ParaScope</th>
+                      <th>ParaName</th>
+                      <th>ParaType</th>
                       <th>ParaShortValue</th>
-                      <th>createBy</th>
-                      <th>createDate</th>
+                      <th>CreateBy</th>
+                      <th>CreateDate</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -55,6 +56,9 @@ const Parameter = () => {
                             <td>{item.paraShortValue}</td>
                             <td>{item.createBy}</td>
                             <td>{item.createDate}</td>
+                            <td>
+                              <a name="" id="" class="btn btn-primary" href="#" role="button">ok</a>
+                            </td>
                           </tr>
                         );
                       })}

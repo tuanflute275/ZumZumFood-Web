@@ -88,11 +88,11 @@ function Login() {
             <div class="card">
               <div class="card-body p-4">
                 <div class="text-center w-75 m-auto">
-                  <a href="index.html">
+                  <a href="javacsript:void(0);">
                     <span>
                       <img
                         src="assets\images\logo-dark.png"
-                        alt=""
+                        alt="logo"
                         height="22"
                       />
                     </span>
