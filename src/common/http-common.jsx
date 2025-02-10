@@ -28,6 +28,11 @@ export const get = async (
   return res.data;
 };
 
+export const search = async (url, query, config = {}) => {
+  const res = await axiosInstance.post(url, query, config);
+  return res.data;
+};
+
 export const save = async (url, data, config = {}) => {
   const res = await axiosInstance.post(url, data, config);
   return res.data;

@@ -2,9 +2,9 @@ import * as http from "../common/http-common";
 
 const URLAPI = `${process.env.REACT_APP_API_SERVER}/v1/parameter`;
 
-export const findAll = async () => {
+export const search = async (query) => {
   try {
-    const res = await http.get(`${URLAPI}`);
+    const res = await http.search(`${URLAPI}/search`, query);
     return [res, null];
   } catch (error) {
     return [null, error];
@@ -14,15 +14,6 @@ export const findAll = async () => {
 export const findById = async (id) => {
   try {
     const res = await http.get(`${URLAPI}/${id}`);
-    return [res, null];
-  } catch (error) {
-    return [null, error];
-  }
-};
-
-export const search = async (keyword, sort, pageNo = 1) => {
-  try {
-    const res = await http.get(`${URLAPI}?key=${keyword}&sort=${sort}&page=${pageNo}`);
     return [res, null];
   } catch (error) {
     return [null, error];
