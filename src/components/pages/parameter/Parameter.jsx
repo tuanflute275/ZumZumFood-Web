@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import * as parameterService from "../../../services/ParameterService";
 import "./parameter.css";
 import Swal from "sweetalert2";
+import { DEFAULT_PAGE_SIZE } from "../../../constants/Constant";
 
 const Parameter = () => {
   const initDetail = {
@@ -12,64 +13,65 @@ const Parameter = () => {
     paraLobValue: "",
     paraDesc: "",
   };
+  const initQuery = {
+    pageNo: 1,
+    pageSize: DEFAULT_PAGE_SIZE,
+    sortColumn: "",
+    sortAscending: true,
+    status: 0,
+    selectAll: false,
+    keyword: "",
+  };
   const formRef = useRef(null);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [query, setQuery] = useState(initQuery);
   const [apiData, setApiData] = useState([]);
+
   const [titleModal, setTitleModal] = useState("");
   const [detail, setDetail] = useState(initDetail);
   const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
 
-  const fetchApiData = async () => {
-    const query = {
-      pageNo: 1,
-      pageSize: 2,
-      sortColumn: "",
-      sortAscending: true,
-      status: 0,
-      selectAll: true,
-      keyword: "",
-    };
-    const [res, err] = await parameterService.search(query);
+  const fetchApiData = async (updatedQuery = query) => {
+    const [res, err] = await parameterService.search(updatedQuery);
     if (res) {
+      setTotalPages(res.data.totalPages);
       setApiData(res.data.items);
     } else {
       console.log(err);
+    }
+  };
+
+  const handlePageClick = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setPageNo(page);
+      query.pageNo = page;
+      fetchApiData();
     }
   };
 
   const handleSearch = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const keyword = formData.get("keyword") || null;
-    const sort = formData.get("sort") || null;
-    const query = {
+    const keyword = formData.get("keyword") || "";
+    const sort = formData.get("sort") || "";
+
+    const updatedQuery = {
+      ...query,
+      keyword,
+      sortColumn: sort ? sort.split("-")[0] || "Id" : query.sortColumn,
+      sortAscending: sort ? sort.split("-")[1] !== "DESC" : query.sortAscending,
       pageNo: 1,
-      pageSize: 2,
-      sortColumn: "",
-      sortAscending: true,
-      status: 0,
-      selectAll: true,
-      keyword: keyword,
     };
-    if (sort) {
-      const [key, value] = sort.split("-");
-      query.sortColumn = key || "Id";
-      query.sortAscending = value === "DESC"; // Nếu là "DESC" thì true, ngược lại là false
-    }
-    console.log(query);
-    const [res, err] = await parameterService.search(query);
-    if (res) {
-      setApiData(res.data.items);
-    } else {
-      console.log(err);
-    }
+    setQuery(updatedQuery);
+    fetchApiData(updatedQuery);
   };
 
   const handleReset = () => {
     formRef.current.reset();
-    //setCurrentPage(1);
-    fetchApiData();
+    fetchApiData(initQuery);
   };
 
   const handleShowDetail = async (id) => {
@@ -118,7 +120,7 @@ const Parameter = () => {
       setIsAdd(false);
       setIsEdit(true);
       const btn = document.getElementById("btn-close-modal-cus");
-      btn.click()
+      btn.click();
     } else {
       Swal.fire({
         position: "top-end",
@@ -144,7 +146,7 @@ const Parameter = () => {
       setIsAdd(true);
       setIsEdit(false);
       const btn = document.getElementById("btn-close-modal-cus");
-      btn.click()
+      btn.click();
     } else {
       Swal.fire({
         position: "top-end",
@@ -362,6 +364,51 @@ const Parameter = () => {
                           })}
                       </tbody>
                     </table>
+                    <nav>
+                      <ul className="pagination pagination-rounded mb-3">
+                        <li
+                          className={`page-item ${
+                            pageNo === 1 ? "disabled" : ""
+                          }`}
+                        >
+                          <a
+                            className="page-link"
+                            href="javascript:void(0)"
+                            onClick={() => handlePageClick(pageNo - 1)}
+                          >
+                            &laquo;
+                          </a>
+                        </li>
+                        {[...Array(totalPages)].map((_, index) => {
+                          const page = index + 1;
+                          return (
+                            <li
+                              key={page}
+                              className={`page-item ${
+                                pageNo === page ? "active" : ""
+                              }`}
+                            >
+                              <a
+                                className="page-link"
+                                href="javascript:void(0)"
+                                onClick={() => handlePageClick(page)}
+                              >
+                                {page}
+                              </a>
+                            </li>
+                          );
+                        })}
+                        <li className="page-item">
+                          <a
+                            className="page-link"
+                            href="javascript:void(0)"
+                            onClick={() => handlePageClick(pageNo + 1)}
+                          >
+                            &raquo;
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
                   </div>
                 </div>
               </div>
@@ -369,6 +416,7 @@ const Parameter = () => {
           </div>
         </div>
 
+        {/* modal form */}
         <div
           id="con-close-modal"
           class="modal fade"
