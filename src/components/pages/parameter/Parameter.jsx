@@ -117,7 +117,8 @@ const Parameter = () => {
       });
       setIsAdd(false);
       setIsEdit(true);
-      // hide modal ...
+      const btn = document.getElementById("btn-close-modal-cus");
+      btn.click()
     } else {
       Swal.fire({
         position: "top-end",
@@ -131,8 +132,6 @@ const Parameter = () => {
   };
 
   const handleSaveEdit = async (id) => {
-    console.log("edit");
-    console.log(detail);
     const [result, error] = await parameterService.update(id, detail);
     if (result) {
       Swal.fire({
@@ -144,7 +143,8 @@ const Parameter = () => {
       });
       setIsAdd(true);
       setIsEdit(false);
-      // hide modal ...
+      const btn = document.getElementById("btn-close-modal-cus");
+      btn.click()
     } else {
       Swal.fire({
         position: "top-end",
@@ -385,6 +385,7 @@ const Parameter = () => {
                 <button
                   type="button"
                   class="close"
+                  id="btn-close-modal-cus"
                   data-dismiss="modal"
                   aria-hidden="true"
                 >
